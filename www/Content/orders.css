@@ -1,0 +1,321 @@
+﻿.order-information {
+  background: #faf9f7;
+  border: 1px solid #c8c2bb;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #3b3b3b;
+  margin-top: 15px;
+  font-size: 1.6em;
+}
+
+.order-information.print {
+  background: white;
+  border: none;
+  color: #6a6a6a !important;
+  margin: -15px -15px 0 -15px;
+  padding: 0 20px;
+}
+
+.print-logo {
+  font-size: 1.8em;
+  margin: 0;
+  margin-bottom: -5px;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.order-information.declined {
+  color: #aaaaaa;
+}
+
+.declined > .order-header {
+  background-color: #e7e7e7;
+  border-bottom: 1px solid #c8c2bb;
+  color: #aaaaaa;
+}
+
+.declined .order-status {
+  background-color: #e7e7e7;
+}
+
+.declined > .order-footer {
+  background-color: #e7e7e7;
+}
+
+.declined .decline-order-button {
+  background-color: #ffbda9;
+  border-left: 1px solid #c8c2bb;
+  position: absolute;
+  line-height: 40px;
+  margin-top: 0;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 34%;
+}
+
+.declined .inline-block,
+.declined .decline-icon {
+  float: none !important;  
+}
+
+.declined .decline-icon {
+  font-size: 1.3em;
+  line-height: 40px;
+  position: relative;
+  top: 2px;
+}
+
+.accept-order-button.accepted {
+  background: transparent;
+  border-left: 1px solid #c8c2bb;
+  color: #919191;
+  line-height: 40px;
+  text-align: center;
+}
+
+.order-element {
+  border-bottom: 1px solid #c8c2bb;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.order-header {
+  background: #f47b20;
+  color: white;
+  height: 40px;
+  line-height: 40px;
+}
+
+.row {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.right-text {
+  float: right;
+  width: 95px;
+}
+
+.right-text.mini {
+  width: 72px;
+}
+
+.right-text.bigger {
+  padding-right: 8px;
+  width: 140px;
+}
+
+.order-name {
+  border-right: 1px solid #c8c2bb;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  width: 75%;
+}
+
+.order-code {
+  float: left;
+  text-align: center;
+  width: 25%;
+}
+
+.order-status {
+  background: #8dc63f;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 3px 0;
+  text-align: center;
+  width: 85px;
+}
+
+.order-status.unpaid {
+  background: #efe6dd;
+  color: #bb3232;
+}
+
+.order-time {
+  background: url(images/pickup-time.png) left no-repeat;
+  -ms-background-size: 24px;
+  background-size: 24px;
+  float: left;
+  line-height: 23px;
+  margin-top: 2px;
+  max-width: 55%;
+  padding-left: 30px;
+}
+
+.order-phone {
+  background: url(images/phone-icon.png) left no-repeat;
+  -ms-background-size: 16px;
+  background-size: 16px;
+  color: #6a6a6a;
+  font-size: 0.9em;
+  line-height: 23px;
+  margin-left: 9px;
+  margin-top: 27px;
+  padding-left: 23px;
+}
+
+.printer-icon {
+  background: url(images/print-icon.png) left no-repeat;
+  -ms-background-size: 38px;
+  background-size: 38px;
+  cursor: pointer;
+  float: left;
+  height: 51px;
+  width: 67px;
+}
+
+.order-time-at {
+  text-transform: lowercase;
+}
+
+.order-items {
+  line-height: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.order-price {
+  font-weight: bold;
+  padding-right: 65px;
+  text-align: right;
+}
+
+.note-text {
+  color: #6a6a6a;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+.order-footer {
+  background: #efe6dd;
+  height: 40px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  position: relative;
+}
+
+.order-footer > .order-time {
+  background: none;
+  line-height: 40px;
+  margin-top: -5px;
+  padding-left: 0;
+  text-transform: none;
+  width: 50%;
+}
+
+.decline-order-button {
+  background: transparent;
+  border: none;
+  color: #919191;
+  cursor: pointer;
+  display: block;
+  font-size: 1em;
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  margin-top: -5px;
+  padding: 0;
+}
+
+.decline-order-button > .inline-block {
+  float: left;
+}
+
+.decline-icon {
+  float: left;
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: 41px;
+  margin-left: 5px;
+}
+
+.accept-order-button {
+  background: #8dc63f;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-size: 1em;
+  height: 40px;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 34%;
+}
+
+.accept-icon {
+  background: url(images/accept.png) no-repeat;
+  -ms-background-size: 20px;
+  background-size: 20px;
+  display: inline-block;
+  height: 22px;
+  margin-left: 3px;
+  vertical-align: middle;
+  width: 23px;
+}
+
+.accepted-icon {
+  background: url(images/accepted.png) no-repeat;
+  -ms-background-size: 20px;
+  background-size: 20px;
+  display: inline-block;
+  height: 22px;
+  margin-left: 3px;
+  vertical-align: middle;
+  width: 23px;
+}
+
+.sound-text {
+  bottom: 22px;
+  color: black;
+  font-size: 22px;
+  left: 90px;
+  margin-bottom: -30px;
+  position: relative;
+  top: -37px;
+  width: 40%;
+}
+
+.customisation-item-options {
+  display: inline-block;
+  max-width: 70%;
+}
+
+@media(max-width: 359px) {
+
+  .order-information {
+    font-size: 1.5em;
+  }
+
+  .order-footer > .order-time {
+    font-size: 0.9em;
+    width: 50% !important;
+  }
+
+  .accept-order-button {
+    width: 36% !important;
+  }
+
+  #header {
+    background-position: 79px center;
+  }
+
+  .decline-order-button {
+    width: 36%;
+  }
+}

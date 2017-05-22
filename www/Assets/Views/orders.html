@@ -1,0 +1,97 @@
+﻿<nav id="main-nav" class="clearfix">
+  <div class="nav-section clickable" ng-class="{ active: mode == 'new' }" ng-click="setMode('new')">New <span ng-show="newOrdersCount > 0" ng-bind="'(' + newOrdersCount + ')'"></span></div>
+  <div class="nav-section clickable middle" ng-class="{ active: mode == 'orders' }" ng-click="setMode('orders')">Orders</div>
+  <div class="nav-section clickable" ng-class="{ active: mode == 'search' }" ng-click="setMode('search')">Search</div>
+</nav>
+
+<div class="sound-icon" ng-click="toggleSound()" ng-class="{ active: soundEnabled}" ng-show="mode == 'new'">
+  <span class="sound-circle" ng-class="{ active: soundEnabled}"></span>
+</div>
+
+<div class="sound-text" ng-bind="soundText" ng-show="mode == 'new'"></div>
+
+<input type="text" class="input" ng-show="mode == 'search'" ng-model="searchWord" placeholder="Enter text to search" ng-change="searchOrders()" />
+
+<section class="order-information" ng-repeat="order in showedOrders" ng-class="{ declined: order.status == 'declined' }">
+  <header class="order-header row">
+    <div ng-bind="order.pickupInfo.name" class="order-name"></div>
+    <div ng-bind="'#' + order.orderCode" class="order-code"></div>
+  </header>
+
+  <div class="order-element clearfix row">
+    <div class="order-time">
+      <span ng-show="order.pickupInfo.minutes == 0">ASAP</span>
+      <span ng-bind="'In ' + order.pickupInfo.minutes + ' mins'" ng-show="order.pickupInfo.minutes"></span>
+      <span ng-show="order.pickupInfo.minutes != 0" class="order-time-at">{{ '@ ' + (order.pickupInfo.date | date:'h:mma') }}</span>
+    </div>
+    <div class="right-text">
+      <div class="order-status" ng-class="{ unpaid: order.pickupInfo.payOnPickup }">
+        <span ng-bind="paidStatus(order)"></span>
+      </div>
+    </div>
+
+    <div class="order-phone">
+      <span ng-bind="order.mobileNumber || '-'"></span>
+    </div>
+  </div>
+  
+  <div class="order-element row">
+    <ul class="order-items">
+      <li ng-repeat="item in order.items">
+        <span ng-bind="parseItemName(item.quantity, item.product.name)" class="bold"></span>
+        <span ng-show="item.hasFree && item.quantity > 1" ng-bind="'(' + item.freeCount + ' free)'"></span>
+        <span ng-show="item.hasFree && item.quantity == 1">(free)</span>
+        <div class="right-text mini">
+          <span ng-bind="parsePrice(item.product.price)"></span>
+        </div>
+
+        <div ng-repeat="option in item.product.customisations" ng-hide="option.quantity == 0">
+          <span class="customisation-item-options">
+            {{ parseItemName(option.quantity, option.name, option.options.length > 0) }}
+            <span ng-bind="optionsList(option.options)"></span>
+          </span>
+          <div class="right-text mini">
+            <span ng-bind="parseCustomisationPrice(option)"></span>
+          </div>
+        </div>
+
+        <div ng-show="item.notes && item.notes != 'null'">
+          <span ng-bind="item.notes"></span>
+          <div class="right-text mini">-</div>
+        </div>
+        
+        <div class="separator" ng-show="order.items[$index + 1]"></div>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="order-element clearfix row">
+    <div class="right-text mini bold" ng-bind="'$' + order.price.toFixed(2)"></div>
+    <div class="right-text bigger text-right bold">Total:</div>
+    <br />
+    <div class="right-text mini note-text" ng-bind="'$' + order.tax.toFixed(2)"></div>
+    <div class="right-text bigger text-right note-text">Includes tax of {{ tax }}%:</div>
+  </div>
+  
+  <footer class="order-footer row">
+    <div class="order-time order-time-at" ng-bind="formatDate(order.submittedAt)"></div>
+    <!--<button class="decline-order-button" ng-hide="order.status == 'declined' || order.status == 'accepted'" ng-click="tryDeclineOrder(order)">
+      <span class="inline-block">Decline</span>
+      <span class="decline-icon">&times;</span>
+    </button>-->
+    <button class="accept-order-button" ng-hide="order.status == 'declined' || order.status == 'accepted'" ng-click="acceptOrder(order)">
+      <span class="inline-block">Accept</span>
+      <span class="accept-icon"></span>
+    </button>
+    
+    <div class="decline-order-button" ng-show="order.status == 'declined'">
+      <span class="inline-block">Declined</span>
+      <span class="decline-icon">&times;</span>
+    </div>
+    
+    <div class="accept-order-button accepted" ng-show="order.status == 'accepted'">
+      <span class="inline-block">Accepted</span>
+      <span class="accepted-icon"></span>
+    </div>
+  </footer>
+</section>

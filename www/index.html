@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ordersApp">
+<head>
+  <meta charset="utf-8">
+  <!--<meta http-equiv="Content-Security-Policy" content="default-src *  'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; media-src *  'unsafe-inline'; img-src * 'self'  data: cdvfile://* content://*;">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">-->
+  <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">-->
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'"> -->
+  <!--<meta http-equiv="Content-Security-Policy" content="default-src *; img-src *;">-->
+  <title>Orders app</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700' rel='stylesheet' type='text/css'>
+
+  <script src="Scripts/jquery-1.6.4.js"></script>
+  <script src="Scripts/jquery.signalR-2.2.0.js"></script>
+  <script src="https://orders.feedmytum.com/signalr/hubs"></script>
+
+
+  <link href="Content/core.css" rel="stylesheet">
+  <link href="Content/input.css" rel="stylesheet">
+  <link href="Content/orders.css" rel="stylesheet">
+  <link href="Content/utilities.css" rel="stylesheet">
+
+
+  <!-- your app's js -->
+  <script>
+    window.onceOfflineNotification = true;
+    window.API_ROOT = "https://orders.feedmytum.com/api";
+  </script>
+  <script src="Scripts/libs/angular.js"></script>
+  <script src="Scripts/libs/angular-route.js"></script>
+  <!--<script src="Scripts/libs/angular-cookies.js"></script>-->
+  <script src="Scripts/libs/angular-local-store.js"></script>
+  <script src="Scripts/libs/lodash.js"></script>
+  <script src="Scripts/libs/restangular.js"></script>
+  <script src="Scripts/libs/angular-touch.min.js"></script>
+  <script src="Assets/main.js"></script>
+  <script src="Assets/Services/Persistence.js"></script>
+  <script src="Assets/Services/Orders.js"></script>
+  <script src="Assets/Controllers/AppController.js"></script>
+  <script src="Assets/Controllers/LoginController.js"></script>
+  <script src="Assets/Controllers/OrdersController.js"></script>
+  <script src="Assets/Controllers/PrintController.js"></script>
+  <script src="cordova.js"></script>
+  <script>
+    (function()
+    {
+      $.connection.hub.url = "https://orders.feedmytum.com/signalr";
+      "use strict";
+      window.keys = {
+        ios: {
+          current: '3fc24ec7-4862-4f16-8f4e-d6496942f8a4'
+        },
+        google: {
+          project_number: {
+            current: '333541195351'
+          },
+          server_key: {
+            current: 'AIzaSyD_ikNIS5dd7eLm1v_m9152qHhksHGXL3A'
+          }
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadScript, false);
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      function onDeviceReady() {
+        console.log('deviceready');
+        $.connection.hub.url = "https://orders.feedmytum.com/signalr";
+
+        document.addEventListener("offline", onOffline, false);
+        if (window.cordova.platformId === 'ios' ){
+          $('#header').css('paddingTop','15px');
+          StatusBar.styleLightContent();
+        }
+      }
+      function loadScript() {
+        console.log('DOMContentLoaded');
+        if (window.cordova.platformId === 'ios' ){
+          $('#header').css('paddingTop','15px');
+          StatusBar.styleLightContent();
+        }
+      }
+      function onOffline() {
+        if (window.onceOfflineNotification){
+          navigator.notification.alert(
+                  'No internet connection found. Please connect and try again.',  // message
+                  function(){},         // callback
+                  'Internet Connection Error',            // title
+                  'Ok'                  // buttonName
+          );
+          window.onceOfflineNotification = false;
+        }
+
+      }
+
+    })();
+  </script>
+</head>
+    <body ng-controller="AppController">
+    <div class="overlay" ng-show="declining || loading"></div>
+    <div id="loader" ng-show="loading"></div>
+    <div id="audio-container" class="ng-hide">
+      <audio id="order-notification-sound" controls src="Content/neworder.mp3"></audio>
+    </div>
+
+    <div class="decline-popup" ng-class="{ active: declining }">
+      <div class="popup-header">Reason for decline</div>
+      <div class="popup-body">
+        <textarea class="decline-text" ng-model="declineMessage" placeholder="Type the reason for declining this order..."></textarea>
+      </div>
+      I
+      <div class="popup-buttons">
+        <button class="button red-button pull-right" ng-click="declineOrder()">Decline</button>
+        <button class="button white-button pull-right" ng-click="cancelDecline()">Cancel</button>
+      </div>
+    </div>
+    <section class="menu" ng-class="{ expanded: menuShowed }">
+      <div class="row menu-store-name">
+        <img class="store-image" ng-src="https://orders.feedmytum.com/api/images/{{placeImageId}}" src="https://orders.feedmytum.com/api/images/7045629f-2e4b-4a13-833e-abf1c0f0e0ab"/>
+        <!--<img class="store-image" ng-src="{{API}}"/>-->
+        <span class="store-name" ng-bind="placeName"></span>
+      </div>
+
+      <div class="row menu-dark-row mini">
+        Account
+      </div>
+
+      <div class="row clickable" ng-click="logout()">
+        Logout
+      </div>
+
+      <div class="row menu-dark-row"><a class="menu-item" target="_blank" href="https://help.coffeetimeapp.co.nz/">Help</a></div>
+    </section>
+
+    <div class="content" ng-click="tryHideMenu()" ng-class="{ moved: menuShowed }">
+      <header id="header" ng-hide="printing">
+        <img id="header-menu-icon" class="clickable" src="Content/images/menu-icon.png" alt="" ng-click="openMenu()" ng-show="isRoute('orders')" />
+        <span class="indicator" ng-bind="newOrdersCount" ng-show="loggedIn"></span>
+      </header>
+
+      <section id="content">
+        <div class="error-message" ng-show="error" ng-bind="error"></div>
+        <ng-view class="ng-scope"><form ng-submit="authorize()" class="ng-pristine ng-valid ng-scope">
+          <input id="login" class="input ng-pristine ng-valid ng-touched" type="text" autocomplete="on" ng-model="email" placeholder="Email address">
+          <input id="password" class="input ng-pristine ng-untouched ng-valid" type="password" ng-model="password" placeholder="Password">
+          <input class="login-button" type="submit" value="Login">
+        </form>
+
+          <div> class="tickbox-wrapper ng-scope">
+            <input type="checkbox" id="remember" ng-model="remember" class="ng-pristine ng-untouched ng-valid"><label for="remember"><span></span>Remember me</label>
+          </div>
+        </ng-view>
+      </section>
+    </div>
+    </body>
+</html>

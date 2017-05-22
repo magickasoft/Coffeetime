@@ -1,0 +1,64 @@
+﻿<section class="order-information print">
+  <h2 class="print-logo">Coffeetime</h2>
+
+  <div class="order-element"></div>
+
+  <header class="row order-element clearfix">
+    <div ng-bind="order.pickupName" class="pull-left bold"></div>
+    <div ng-bind="'#' + order.orderCode" class="right-text mini"></div>
+  </header>
+
+  <div class="order-element clearfix row">
+    <div class="order-time">
+      <span ng-bind="order.pickupTime"></span>
+      <span ng-show="order.pickupTime != 'ASAP'" class="order-time-at">{{ '@ ' + (order.pickupTimestamp | date:'h:mma') }}</span>
+    </div>
+    <div class="right-text mini">
+      <span ng-bind="paidStatus(order)"></span>
+    </div>
+
+    <div class="order-phone">
+      <span ng-bind="order.mobileNumber || '-'"></span>
+    </div>
+  </div>
+
+  <div class="order-element row">
+    <ul class="order-items">
+      <li ng-repeat="item in order.items">
+        <span ng-bind="parseItemName(item.quantity, item.productName)" class="bold"></span>
+        <div class="right-text mini">
+          <span ng-bind="parsePrice(item.productPrice)"></span>
+        </div>
+
+        <div ng-repeat="option in item.customisations">
+          <span>
+            {{ parseItemName(option.quantity, option.name, option.options.length > 0) }}
+            <span ng-bind="optionsList(option.options)"></span>
+          </span>
+          <div class="right-text mini">
+            <span ng-bind="parsePrice(option.price)"></span>
+          </div>
+        </div>
+
+        <div ng-show="item.notes && item.notes != 'null'">
+          <span ng-bind="item.notes"></span>
+          <div class="right-text mini">-</div>
+        </div>
+
+        <div class="separator" ng-show="order.items[$index + 1]"></div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="order-element clearfix row">
+    <div class="right-text mini bold" ng-bind="'$' + order.price.toFixed(2)"></div>
+    <div class="right-text bigger text-right bold">Total:</div>
+    <br />
+    <div class="right-text mini note-text" ng-bind="'$' + order.tax"></div>
+    <div class="right-text bigger text-right note-text">Includes tax of {{ tax }}%:</div>
+  </div>
+
+  <footer class="order-element clearfix row">
+    <div class="order-time order-time-at">{{ order.submittedTimeStamp | date:'h:mma, dd MMM `yy' }}</div>
+  </footer>
+</section>

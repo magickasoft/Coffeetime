@@ -1,0 +1,99 @@
+﻿.input {
+  border: 1px solid #cccccc;
+  -ms-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+  -ms-box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+  box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+  box-sizing: border-box;
+  display: block;
+  font-size: 1.6em;
+  height: 40px;
+  margin: 10px 0;
+  padding: 0 8px;
+  width: 100%;
+}
+
+input:focus {
+  border: 1px solid #ffc273;
+  outline: none;
+}
+
+.login-button {
+  -ms-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #8dc63f;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  -ms-box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  border: 1px solid #6b9c28;
+  color: #491c00;
+  display: block;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 1.6em;
+  font-weight: bold;
+  height: 40px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.login-button:hover, .login-button:focus {
+  background: #70a32a;
+  outline: none;
+}
+
+.tickbox-wrapper {
+  background-color: #e8e8e8;
+  border: 1px solid #d5d5d5;
+  -ms-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #491c00;
+  display: block;
+  font-weight: bold;
+  font-size: 1.6em;
+  height: 40px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.tickbox-wrapper:hover {
+  background-color: #cecece;
+}
+
+input[type="checkbox"] {
+  display:none;
+}
+
+input[type=checkbox] + label {
+  display: block; 
+  line-height: 40px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+input[type="checkbox"] + label span:first-child {
+  background: url(images/tickbox_radio.png) 0 0 no-repeat;
+  -ms-background-size: 55px;
+  background-size: 55px;
+  cursor: pointer;
+  display: inline-block;
+  float: left;
+  height: 24px;
+  left: 10px;
+  position: absolute;
+  top: 8px;
+  vertical-align: middle;
+  width: 25px;
+}
+
+input[type="checkbox"]:checked + label span:first-child {
+  background: url(images/tickbox_radio.png) -31px 0 no-repeat;
+  -ms-background-size: 55px;
+  background-size: 55px;
+}
